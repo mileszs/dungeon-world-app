@@ -26,10 +26,11 @@ var CharacterBox = React.createClass({
 
   render: function() {
     return (
-      <div className="character-box">
-        <h2>Characters</h2>
+      <div id="characters">
         <CharacterList characters={this.state.characters} />
         <CharacterForm />
+        <div id="character-validation-messages">{'\u0020'}</div>
+        <div className="clear"></div>
       </div>
     );
   },
@@ -46,7 +47,8 @@ var CharacterList = React.createClass({
       characterItems.push(<CharacterItem character={this.props.characters[key]} />);
     }
     return (
-      <div className="character-list">
+      <div id="character-list">
+        <h3>Characters</h3>
         <ul>
           {characterItems}
         </ul>
@@ -59,7 +61,7 @@ var CharacterItem = React.createClass({
   handleClick: function(e) {
     e.preventDefault();
     var id = e.target.dataset.charId;
-    CharacterActions.switchCurrent(id);
+    CharacterActions.switchChar(id);
   },
 
   render: function() {
@@ -75,43 +77,76 @@ var CharacterForm = React.createClass({
   handleSubmit: function(e) {
     e.preventDefault();
     var data = {};
-    for (var el in this.refs) {
-      if (this.refs.hasOwnProperty(el)) {
-        data[el] = this.refs[el].getDOMNode().value.trim();
-        this.refs[el].getDOMNode().value = '';
-      }
+    var msg = this._validCharacter();
+    if (_.isEmpty(msg)) {
+      $('#character-validation-messages').html('');
+      _.each($('#character-form form input, #character-form form select'), function(el) {
+        data[$(el).prop('name')] = $(el).val().trim();
+        $(el).val('');
+      });
+      CharacterActions.create(data);
+    } else {
+      $('#character-validation-messages').html(msg);
     }
-    CharacterActions.create(data);
   },
 
   render: function() {
+    var attrs = ['str', 'dex', 'con', 'cha', 'wis', 'int'];
+    var options = ['16', '15', '13', '12', '9', '8'];
     return (
-      <div className="dice-form">
+      <div id="character-form">
         <h3>New Character</h3>
         <form onSubmit={this.handleSubmit}>
-          <label for="name">Name</label>
-          <input type="text" ref="name" name="name" id="name" size="20" />
-          <br />
-          <label for="str">STR</label>
-          <input type="text" ref="str" name="str" id="str" size="2" />
-          <br />
-          <label for="dex">DEX</label>
-          <input type="text" ref="dex" name="dex" id="dex" size="2" />
-          <br />
-          <label for="con">CON</label>
-          <input type="text" ref="con" name="con" id="con" size="2" />
-          <br />
-          <label for="cha">CHA</label>
-          <input type="text" ref="cha" name="cha" id="cha" size="2" />
-          <br />
-          <label for="wis">WIS</label>
-          <input type="text" ref="wis" name="wis" id="wis" size="2" />
-          <br />
-          <label for="int">INT</label>
-          <input type="text" ref="int" name="int" id="int" size="2" />
-          <br />
-          <input type="submit" name="submit" value="Save" />
+          <div className="form-textfield">
+            <label htmlFor="name">Name</label>
+            <input type="text" ref="name" name="name" id="name" size="20" />
+          </div>
+          {
+            _.map(attrs, function(attr) {
+              return (
+                <StatSelect available_options={options} attr={attr} />
+              );
+            })
+          }
+          <div className="form-submit">
+            <input type="submit" name="submit" value="Save" />
+          </div>
         </form>
+      </div>
+    );
+  },
+
+  _validCharacter: function() {
+    var name = $('#name').val();
+    var values = _.map($('#character-form select'), function(el) { return $(el).val(); });
+    var msg = '';
+    if (_.isEmpty(name)) {
+      msg = msg + 'You must provide a name for your character.'
+    }
+    if (_.compact(values).length < 6) {
+      msg = msg + 'You must pick a value for each attribute.'
+    }
+    if (values.length > _.uniq(values).length) {
+      msg = msg + ' Each stat number must be used only once.';
+    }
+    return msg;
+  },
+});
+
+var StatSelect = React.createClass({
+  render: function() {
+    var options = this.props.available_options;
+    var attr = this.props.attr;
+    return (
+      <div className="form-select">
+        <label htmlFor={attr}>{attr.toUpperCase()}</label>
+        <select ref={attr} id={attr} name={attr} defaultValue="">
+          <option value="" disabled></option>
+          {
+            options.map(function(option, index){
+              return <option key={index} value={option}>{option}</option>
+          })}
+        </select>
       </div>
     );
   }

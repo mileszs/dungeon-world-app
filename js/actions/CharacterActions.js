@@ -23,9 +23,9 @@ var CharacterActions = {
     });
   },
 
-  switchCurrent: function(id) {
+  switchChar: function(id) {
     AppDispatcher.dispatch({
-      actionType: 'SWITCH_CURRENT',
+      actionType: 'SWITCH_CHAR',
       id: id
     });
   }

@@ -6,6 +6,13 @@ var assign = require('object-assign');
 var CHANGE_EVENT = 'change';
 
 var _characters = {};
+var _current = {};
+
+function switchChar(id) {
+  _current = _characters[id]
+  localStorage.setItem('currentCharacter', JSON.stringify(_current));
+  return _current;
+}
 
 function create(attrs) {
   var character = new Character(attrs.name, attrs);
@@ -34,16 +41,19 @@ var CharacterStore = assign({}, EventEmitter.prototype, {
     return _characters;
   },
 
-  current: function(id) {
-    var chars = this.getAll();
-    if (id === undefined) {
+  current: function() {
+    if (_current && Object.getOwnPropertyNames(_current).length > 0) {
+      return _current;
+    } else if (localStorage.getItem('currentCharacter') !== undefined) {
+      _current = JSON.parse(localStorage.getItem('currentCharacter'));
+      return _current;
+    } else {
+      var chars = this.getAll();
       var characterAry = [];
       for (var key in chars) {
         characterAry.push(chars[key]);
       }
       return characterAry[characterAry.length-1];
-    } else {
-      chars[id];
     }
   },
 
@@ -64,6 +74,11 @@ AppDispatcher.register(function(action) {
   var data;
 
   switch(action.actionType) {
+    case 'SWITCH_CHAR':
+      switchChar(action.id)
+      CharacterStore.emitChange();
+      break;
+
     case 'CREATE':
       data = action.data;
       if (Object.getOwnPropertyNames(data).length > 0) {
@@ -82,11 +97,6 @@ AppDispatcher.register(function(action) {
 
     case 'DESTROY':
       destroy(action.id);
-      CharacterStore.emitChange();
-      break;
-
-    case 'SWITCH_CURRENT':
-      switchCurrent(action.id);
       CharacterStore.emitChange();
       break;
 

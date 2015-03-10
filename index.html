@@ -9,27 +9,23 @@
         padding: 2px 4px;
         text-align: right;
       }
-      #current, #character, #rolls {
+      #current, #character-list, #rolls, #character-form, #character-validation-messages {
         border: 1px solid #666;
       }
-      #current, #rolls {
+      #current, #rolls, #character-list, #character-form, #character-validation-messages  {
         float: left;
         width: 300px;
         margin: 12px;
       }
-      #rolls {
-      
+      .clear {
+        clear: both;
       }
     </style>
   </head>
   <body>
-    <div id="current">
-    </div>
-    <div id="rolls">
-    </div>
-    <div style="clear: both;">&nbsp;</div>
-    <div id="character">
-    </div>
+    <div id="content"></div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="js/lodash.min.js"></script>
     <script src="js/bundle.js"></script>
   </body>
 </html>

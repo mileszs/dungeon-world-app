@@ -34,8 +34,8 @@ var DiceBox = React.createClass({
       return null;
     } else {
       return (
-        <div className="dice-box">
-          <h2>{this.state.current.name}'s Actions</h2>
+        <div id="rolls">
+          <h2>Action History</h2>
           <RollHistory rolls={this.state.rolls} />
           <DiceForm currentCharacter={this.state.current}/>
         </div>

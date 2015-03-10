@@ -13,7 +13,7 @@ Roll.prototype.basicMove = function(mod) {
   roll1 = this.rollD6();
   roll2 = this.rollD6();
   total = roll1 + roll2 + parseInt(mod);
-  this.result = '2d6+' + mod + ' (' + roll1 + ',' + roll2 + ') :' + total;
+  this.result = this.character.name + ': 2d6+' + mod + ' (' + roll1 + ',' + roll2 + ') :' + total;
   return this
 }
 

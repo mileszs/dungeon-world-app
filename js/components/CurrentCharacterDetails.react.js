@@ -23,11 +23,11 @@ var CurrentCharacterDetails = React.createClass({
   },
 
   render: function() {
-    if (this.state.current === undefined) {
+    if (this.state.current === undefined || this.state.current === null) {
       return null;
     } else {
       return (
-        <div className="character-details">
+        <div id="current">
           <h2>Character Stats</h2>
           <h3>{this.state.current.name}</h3>
           <ul>
