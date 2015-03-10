@@ -1,4 +1,5 @@
 var React = require('react');
+var _ = require('lodash');
 var CharacterStore = require('../stores/CharacterStore');
 var CharacterActions = require('../actions/CharacterActions');
 

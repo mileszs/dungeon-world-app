@@ -1,3 +1,4 @@
+var _ = require('lodash');
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 var Roll = require('../models/Roll');
 var EventEmitter = require('events').EventEmitter;
