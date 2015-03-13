@@ -1,6 +1,6 @@
-var React = require('react');
-var CharacterStore = require('../stores/CharacterStore');
-var CharacterActions = require('../actions/CharacterActions');
+import React from 'react';
+import CharacterStore from '../stores/CharacterStore';
+import CharacterActions from '../actions/CharacterActions';
 
 function getCurrentCharacterState() {
   var current = CharacterStore.current();
@@ -9,20 +9,20 @@ function getCurrentCharacterState() {
   };
 }
 
-var CurrentCharacterDetails = React.createClass({
-  getInitialState: function() {
+let CurrentCharacterDetails = React.createClass({
+  getInitialState() {
     return getCurrentCharacterState();
   },
 
-  componentDidMount: function() {
+  componentDidMount() {
     CharacterStore.addChangeListener(this._onChange);
   },
 
-  componentWillUnmount: function() {
+  componentWillUnmount() {
     CharacterStore.removeChangeListener(this._onChange);
   },
 
-  render: function() {
+  render() {
     if (this.state.current === undefined || this.state.current === null) {
       return null;
     } else {
@@ -43,9 +43,9 @@ var CurrentCharacterDetails = React.createClass({
     }
   },
 
-  _onChange: function() {
+  _onChange() {
     this.setState(getCurrentCharacterState());
   }
 });
 
-module.exports = CurrentCharacterDetails;
+export default CurrentCharacterDetails;

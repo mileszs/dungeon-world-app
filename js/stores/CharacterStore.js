@@ -1,12 +1,13 @@
-var AppDispatcher = require('../dispatcher/AppDispatcher');
-var Character = require('../models/Character.js');
-var EventEmitter = require('events').EventEmitter;
-var assign = require('object-assign');
+import AppDispatcher from '../dispatcher/AppDispatcher';
+import Character from '../models/Character.js';
+import Events from 'events';
+import assign from 'object-assign';
+let EventEmitter = Events.EventEmitter;
 
-var CHANGE_EVENT = 'change';
+let CHANGE_EVENT = 'change';
 
-var _characters = {};
-var _current = {};
+let _characters = {};
+let _current = {};
 
 function switchChar(id) {
   _current = _characters[id]
@@ -15,7 +16,7 @@ function switchChar(id) {
 }
 
 function create(attrs) {
-  var character = new Character(attrs.name, attrs);
+  let character = new Character(attrs.name, attrs);
   _characters[character.id] = character;
   localStorage.setItem('characters', JSON.stringify(_characters));
 }
@@ -29,9 +30,9 @@ function destroy(id) {
 function destroyAll() {
 }
 
-var CharacterStore = assign({}, EventEmitter.prototype, {
-  getAll: function() {
-    var retrievedCharacters = localStorage.getItem('characters');
+let CharacterStore = assign({}, EventEmitter.prototype, {
+  getAll() {
+    let retrievedCharacters = localStorage.getItem('characters');
 
     if (retrievedCharacters !== undefined) {
       _characters = JSON.parse(retrievedCharacters);
@@ -41,15 +42,15 @@ var CharacterStore = assign({}, EventEmitter.prototype, {
     return _characters;
   },
 
-  current: function() {
+  current() {
     if (_current && Object.getOwnPropertyNames(_current).length > 0) {
       return _current;
     } else if (localStorage.getItem('currentCharacter') !== undefined) {
       _current = JSON.parse(localStorage.getItem('currentCharacter'));
       return _current;
     } else {
-      var chars = this.getAll();
-      var characterAry = [];
+      let chars = this.getAll();
+      let characterAry = [];
       for (var key in chars) {
         characterAry.push(chars[key]);
       }
@@ -57,21 +58,21 @@ var CharacterStore = assign({}, EventEmitter.prototype, {
     }
   },
 
-  emitChange: function() {
+  emitChange() {
     this.emit(CHANGE_EVENT);
   },
 
-  addChangeListener: function(callback) {
+  addChangeListener(callback) {
     this.on(CHANGE_EVENT, callback);
   },
 
-  removeChangeListener: function(callback) {
+  removeChangeListener(callback) {
     this.removeListener(CHANGE_EVENT, callback);
   }
 });
 
 AppDispatcher.register(function(action) {
-  var data;
+  let data;
 
   switch(action.actionType) {
     case 'SWITCH_CHAR':
@@ -105,4 +106,4 @@ AppDispatcher.register(function(action) {
   }
 });
 
-module.exports = CharacterStore;
+export default CharacterStore;

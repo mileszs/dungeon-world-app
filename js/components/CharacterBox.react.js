@@ -1,7 +1,7 @@
-var React = require('react');
-var _ = require('lodash');
-var CharacterStore = require('../stores/CharacterStore');
-var CharacterActions = require('../actions/CharacterActions');
+import React from 'react';
+import _ from 'lodash';
+import CharacterStore from '../stores/CharacterStore';
+import CharacterActions from '../actions/CharacterActions';
 
 // Create one top-level component that handles state, passes
 // it as props to children. Single getAppState() should cover
@@ -12,20 +12,20 @@ function getCharacterState() {
   };
 }
 
-var CharacterBox = React.createClass({
-  getInitialState: function() {
+let CharacterBox = React.createClass({
+  getInitialState() {
     return getCharacterState();
   },
 
-  componentDidMount: function() {
+  componentDidMount() {
     CharacterStore.addChangeListener(this._onChange);
   },
 
-  componentWillUnmount: function() {
+  componentWillUnmount() {
     CharacterStore.removeChangeListener(this._onChange);
   },
 
-  render: function() {
+  render() {
     return (
       <div id="characters">
         <CharacterList characters={this.state.characters} />
@@ -36,16 +36,16 @@ var CharacterBox = React.createClass({
     );
   },
 
-  _onChange: function() {
+  _onChange() {
     this.setState(getCharacterState());
   }
 });
 
-var CharacterList = React.createClass({
-  render: function() {
+let CharacterList = React.createClass({
+  render() {
     var characterItems = [];
     for (var key in this.props.characters) {
-      characterItems.push(<CharacterItem character={this.props.characters[key]} />);
+      characterItems.push(<CharacterItem key={key} character={this.props.characters[key]} />);
     }
     return (
       <div id="character-list">
@@ -58,14 +58,14 @@ var CharacterList = React.createClass({
   }
 });
 
-var CharacterItem = React.createClass({
-  handleClick: function(e) {
+let CharacterItem = React.createClass({
+  handleClick(e) {
     e.preventDefault();
     var id = e.target.dataset.charId;
     CharacterActions.switchChar(id);
   },
 
-  render: function() {
+  render() {
     return (
       <li>
         <a href="#" onClick={this.handleClick} data-char-id={this.props.character.id}>{this.props.character.name}</a>
@@ -74,8 +74,8 @@ var CharacterItem = React.createClass({
   }
 });
 
-var CharacterForm = React.createClass({
-  handleSubmit: function(e) {
+let CharacterForm = React.createClass({
+  handleSubmit(e) {
     e.preventDefault();
     var data = {};
     var msg = this._validCharacter();
@@ -91,7 +91,7 @@ var CharacterForm = React.createClass({
     }
   },
 
-  render: function() {
+  render() {
     var attrs = ['str', 'dex', 'con', 'cha', 'wis', 'int'];
     var options = ['16', '15', '13', '12', '9', '8'];
     return (
@@ -103,9 +103,9 @@ var CharacterForm = React.createClass({
             <input type="text" ref="name" name="name" id="name" size="20" />
           </div>
           {
-            _.map(attrs, function(attr) {
+            attrs.map(function(attr, index) {
               return (
-                <StatSelect available_options={options} attr={attr} />
+                <StatSelect key={`select${index}`} available_options={options} attr={attr} />
               );
             })
           }
@@ -117,7 +117,7 @@ var CharacterForm = React.createClass({
     );
   },
 
-  _validCharacter: function() {
+  _validCharacter() {
     var name = $('#name').val();
     var values = _.map($('#character-form select'), function(el) { return $(el).val(); });
     var msg = '';
@@ -134,8 +134,8 @@ var CharacterForm = React.createClass({
   },
 });
 
-var StatSelect = React.createClass({
-  render: function() {
+let StatSelect = React.createClass({
+  render() {
     var options = this.props.available_options;
     var attr = this.props.attr;
     return (
@@ -153,4 +153,4 @@ var StatSelect = React.createClass({
   }
 });
 
-module.exports = CharacterBox;
+export default CharacterBox;

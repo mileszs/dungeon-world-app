@@ -1,9 +1,9 @@
-var React = require('react');
-var _ = require('lodash');
-var CharacterStore = require('../stores/CharacterStore');
-var RollStore = require('../stores/RollStore');
-var CharacterActions = require('../actions/CharacterActions');
-var RollActions = require('../actions/RollActions');
+import React from 'react';
+import _ from 'lodash';
+import CharacterStore from '../stores/CharacterStore';
+import RollStore from '../stores/RollStore';
+import CharacterActions from '../actions/CharacterActions';
+import RollActions from '../actions/RollActions';
 
 function getDiceBoxState() {
   var current = CharacterStore.current();
@@ -14,23 +14,23 @@ function getDiceBoxState() {
   };
 }
 
-var DiceBox = React.createClass({
-  getInitialState: function() {
+let DiceBox = React.createClass({
+  getInitialState() {
     return getDiceBoxState();
   },
 
-  componentDidMount: function() {
+  componentDidMount() {
     RollStore.addChangeListener(this._onChange);
     CharacterStore.addChangeListener(this._onChange);
   },
 
-  componentWillUnmount: function() {
+  componentWillUnmount() {
     RollStore.removeChangeListener(this._onChange);
     CharacterStore.removeChangeListener(this._onChange);
   },
 
 
-  render: function() {
+  render() {
     if (this.state.current === undefined) {
       return null;
     } else {
@@ -44,16 +44,16 @@ var DiceBox = React.createClass({
     }
   },
 
-  _onChange: function() {
+  _onChange() {
     this.setState(getDiceBoxState());
   }
 });
 
-var RollHistory = React.createClass({
-  render: function() {
-    var rollNodes = this.props.rolls.map(function (roll) {
+let RollHistory = React.createClass({
+  render() {
+    var rollNodes = this.props.rolls.map(function (roll, index) {
       return (
-        <RollItem action={roll.action}>{roll.result}</RollItem>
+        <RollItem key={`roll${index}`} action={roll.action}>{roll.result}</RollItem>
       );
     });
     return (
@@ -64,14 +64,14 @@ var RollHistory = React.createClass({
   }
 });
 
-var DiceForm = React.createClass({
-  handleAction: function(e) {
+let DiceForm = React.createClass({
+  handleAction(e) {
     e.preventDefault();
     var action = e.target.value;
     RollActions.create({action: action, character: this.props.currentCharacter});
   },
 
-  render: function() {
+  render() {
     return (
       <div className="dice-form">
         <button onClick={this.handleAction} ref="action" value="defyDanger">Defy Danger</button>
@@ -86,8 +86,8 @@ var DiceForm = React.createClass({
   },
 });
 
-var RollItem = React.createClass({
-  render: function() {
+let RollItem = React.createClass({
+  render() {
     var rollNums = this.props.children.split(':');
     return (
       <tr>
@@ -98,10 +98,10 @@ var RollItem = React.createClass({
     );
   },
 
-  titleize: function(str) {
+  titleize(str) {
     var result = str.replace( /([A-Z])/g, " $1" );
     return result.charAt(0).toUpperCase() + result.slice(1);
   }
 });
 
-module.exports = DiceBox;
+export default DiceBox;

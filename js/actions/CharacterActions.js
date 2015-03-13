@@ -1,14 +1,14 @@
-var AppDispatcher = require('../dispatcher/AppDispatcher');
+import AppDispatcher from '../dispatcher/AppDispatcher';
 
-var CharacterActions = {
-  create: function(data) {
+export var CharacterActions = {
+  create(data) {
     AppDispatcher.dispatch({
       actionType: 'CREATE',
       data: data
     });
   },
 
-  update: function(id, data) {
+  update(id, data) {
     AppDispatcher.dispatch({
       actionType: 'UPDATE',
       id: id,
@@ -16,19 +16,17 @@ var CharacterActions = {
     });
   },
 
-  destroy: function(id) {
+  destroy(id) {
     AppDispatcher.dispatch({
       actionType: 'DESTROY',
       id: id
     });
   },
 
-  switchChar: function(id) {
+  switchChar(id) {
     AppDispatcher.dispatch({
       actionType: 'SWITCH_CHAR',
       id: id
     });
   }
 }
-
-module.exports = CharacterActions;

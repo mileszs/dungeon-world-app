@@ -1,6 +1,6 @@
-var React = require('react');
-var _ = require('lodash');
-var DWCharManagerApp = require('./components/DWCharManagerApp.react');
+import React from 'react';
+import _ from 'lodash';
+import DWCharManagerApp from './components/DWCharManagerApp.react';
 React.render(
   <DWCharManagerApp />,
   document.getElementById('content')

@@ -1,16 +1,17 @@
-var React = require('react');
-var CharacterStore = require('../stores/CharacterStore');
-var RollStore = require('../stores/RollStore');
-var CharacterBox = require('./CharacterBox.react');
-var DiceBox = require('./DiceBox.react');
-var CurrentCharacterDetails = require('./CurrentCharacterDetails.react');
+import React from 'react';
+import _ from 'lodash';
+import CharacterStore from '../stores/CharacterStore';
+import RollStore from '../stores/RollStore';
+import CharacterBox from './CharacterBox.react';
+import DiceBox from './DiceBox.react';
+import CurrentCharacterDetails from './CurrentCharacterDetails.react';
 
 // Create one top-level component that handles state, passes
 // it as props to children. Single getAppState() should cover
 // everything - characters, currentCharacter, rolls
 function getAppState() {
-  var current = CharacterStore.current();
-  var rolls = RollStore.getAll();
+  let current = CharacterStore.current();
+  let rolls = RollStore.getAll();
   return {
     characters: CharacterStore.getAll(),
     current: current,
@@ -18,13 +19,13 @@ function getAppState() {
   };
 }
 
-var DWCharManagerApp = React.createClass({
+let DWCharManagerApp = React.createClass({
   getInitialState: function() {
     return getAppState();
   },
 
   render: function() {
-    clearStyle = {
+    let clearStyle = {
       clear: 'both'
     }
     return (
@@ -37,4 +38,4 @@ var DWCharManagerApp = React.createClass({
     );
   }
 });
-module.exports = DWCharManagerApp;
+export default DWCharManagerApp;

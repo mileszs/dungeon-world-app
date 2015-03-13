@@ -1,12 +1,10 @@
-var AppDispatcher = require('../dispatcher/AppDispatcher');
+import AppDispatcher from '../dispatcher/AppDispatcher';
 
-var RollActions = {
-  create: function(data) {
+export var RollActions = {
+  create(data) {
     AppDispatcher.dispatch({
       actionType: 'ROLL',
       data: data
     });
   }
 }
-
-module.exports = RollActions;

@@ -7,6 +7,7 @@ var assign = require('object-assign');
 var CHANGE_EVENT = 'change';
 
 var _rolls = [];
+let other = '';
 
 function create(data) {
   var roll = new Roll(data.character, data.action);
