@@ -1,28 +1,17 @@
-var _ = require('lodash');
-var AppDispatcher = require('../dispatcher/AppDispatcher');
-var Roll = require('../models/Roll');
-var EventEmitter = require('events').EventEmitter;
-var assign = require('object-assign');
+import _ from 'lodash';
+import AppDispatcher from '../dispatcher/AppDispatcher';
+import EventEmitterLib from 'events'
+let EventEmitter = EventEmitterLib.EventEmitter;
 
-var CHANGE_EVENT = 'change';
+import assign from 'object-assign';
 
-var _rolls = [];
-let other = '';
+let CHANGE_EVENT = 'change';
 
-function create(data) {
-  var roll = new Roll(data.character, data.action);
-  _rolls.push(roll);
-  localStorage.setItem('rolls', JSON.stringify(_rolls));
-}
+let rolls = [];
 
-var RollStore = assign({}, EventEmitter.prototype, {
+let RollStore = assign({}, EventEmitter.prototype, {
   getAll: function() {
-    var retrievedRolls = localStorage.getItem('rolls');
-    _rolls = JSON.parse(retrievedRolls) || [];
-    if (Object.getOwnPropertyNames(_rolls).length == 0) {
-      _rolls = [];
-    }
-    return _rolls;
+    return rolls;
   },
 
   emitChange: function() {
@@ -39,17 +28,15 @@ var RollStore = assign({}, EventEmitter.prototype, {
 });
 
 AppDispatcher.register(function(action) {
-  var data;
-
   switch(action.actionType) {
-    case 'ROLL':
-      data = action.data;
-      if (Object.getOwnPropertyNames(data).length > 0) {
-        create(data);
-      }
+    case 'NEW_ROLL':
+      rolls.push(action.roll);
       RollStore.emitChange();
       break;
-
+    case 'LOADED_ROLL_HISTORY':
+      rolls = action.rolls;
+      RollStore.emitChange();
+      break;
     default:
       // no op
   }

@@ -11,9 +11,9 @@ class Roll {
   }
 
   basicMove(mod) {
-    roll1 = this.rollD6();
-    roll2 = this.rollD6();
-    total = roll1 + roll2 + parseInt(mod);
+    let roll1 = this.rollD6();
+    let roll2 = this.rollD6();
+    let total = roll1 + roll2 + parseInt(mod);
     this.result = this.character.name + ': 2d6+' + mod + ' (' + roll1 + ',' + roll2 + ') :' + total;
     return this
   }

@@ -5,48 +5,20 @@ import RollStore from '../stores/RollStore';
 import CharacterActions from '../actions/CharacterActions';
 import RollActions from '../actions/RollActions';
 
-function getDiceBoxState() {
-  var current = CharacterStore.current();
-  var rolls = RollStore.getAll();
-  return {
-    current: current,
-    rolls: rolls
-  };
-}
-
 let DiceBox = React.createClass({
-  getInitialState() {
-    return getDiceBoxState();
-  },
-
-  componentDidMount() {
-    RollStore.addChangeListener(this._onChange);
-    CharacterStore.addChangeListener(this._onChange);
-  },
-
-  componentWillUnmount() {
-    RollStore.removeChangeListener(this._onChange);
-    CharacterStore.removeChangeListener(this._onChange);
-  },
-
-
   render() {
-    if (this.state.current === undefined) {
+    if (this.props.current === undefined) {
       return null;
     } else {
       return (
         <div id="rolls">
           <h2>Action History</h2>
-          <RollHistory rolls={this.state.rolls} />
-          <DiceForm currentCharacter={this.state.current}/>
+          <RollHistory rolls={this.props.rolls} />
+          <DiceForm currentCharacter={this.props.current}/>
         </div>
       );
     }
   },
-
-  _onChange() {
-    this.setState(getDiceBoxState());
-  }
 });
 
 let RollHistory = React.createClass({
@@ -58,7 +30,9 @@ let RollHistory = React.createClass({
     });
     return (
       <table className="roll-history">
-        {rollNodes}
+        <tbody>
+          {rollNodes}
+        </tbody>
       </table>
     );
   }

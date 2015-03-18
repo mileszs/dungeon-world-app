@@ -1,32 +1,48 @@
 import AppDispatcher from '../dispatcher/AppDispatcher';
+import RollActions from '../actions/RollActions';
+import CharacterAPIUtils from '../utils/CharacterAPIUtils';
 
-export var CharacterActions = {
+let CharacterActions = {
   create(data) {
-    AppDispatcher.dispatch({
-      actionType: 'CREATE',
-      data: data
-    });
-  },
-
-  update(id, data) {
-    AppDispatcher.dispatch({
-      actionType: 'UPDATE',
-      id: id,
-      data: data
-    });
-  },
-
-  destroy(id) {
-    AppDispatcher.dispatch({
-      actionType: 'DESTROY',
-      id: id
-    });
+    CharacterAPIUtils.create(data, function(data) {
+      AppDispatcher.dispatch({
+        actionType: 'NEW_CHAR',
+        data: data
+      });
+    })
   },
 
   switchChar(id) {
+    CharacterAPIUtils.setCurrent(id, function(data) {
+      AppDispatcher.dispatch({
+        actionType: 'SWITCH_CHAR',
+        character: data.character
+      });
+    });
+    RollActions.load({characterId: id});
+  },
+
+  load(data) {
+    CharacterAPIUtils.getCurrentChar(this.receiveCurrentChar);
+    CharacterAPIUtils.getAll(this.receiveAll);
     AppDispatcher.dispatch({
-      actionType: 'SWITCH_CHAR',
-      id: id
+      actionType: 'LOADING_CURRENT_CHAR'
+    });
+  },
+
+  receiveCurrentChar(data) {
+    AppDispatcher.dispatch({
+      actionType: 'LOADED_CURRENT_CHAR',
+      character: data.character
+    });
+  },
+
+  receiveAll(data) {
+    AppDispatcher.dispatch({
+      actionType: 'LOADED_ALL_CHARS',
+      characters: data.characters
     });
   }
 }
+
+export default CharacterActions;

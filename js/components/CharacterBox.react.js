@@ -3,42 +3,17 @@ import _ from 'lodash';
 import CharacterStore from '../stores/CharacterStore';
 import CharacterActions from '../actions/CharacterActions';
 
-// Create one top-level component that handles state, passes
-// it as props to children. Single getAppState() should cover
-// everything - characters, currentCharacter, rolls
-function getCharacterState() {
-  return {
-    characters: CharacterStore.getAll()
-  };
-}
-
 let CharacterBox = React.createClass({
-  getInitialState() {
-    return getCharacterState();
-  },
-
-  componentDidMount() {
-    CharacterStore.addChangeListener(this._onChange);
-  },
-
-  componentWillUnmount() {
-    CharacterStore.removeChangeListener(this._onChange);
-  },
-
   render() {
     return (
       <div id="characters">
-        <CharacterList characters={this.state.characters} />
+        <CharacterList characters={this.props.characters} />
         <CharacterForm />
         <div id="character-validation-messages">{'\u0020'}</div>
         <div className="clear"></div>
       </div>
     );
   },
-
-  _onChange() {
-    this.setState(getCharacterState());
-  }
 });
 
 let CharacterList = React.createClass({
