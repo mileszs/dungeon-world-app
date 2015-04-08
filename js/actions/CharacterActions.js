@@ -13,17 +13,14 @@ let CharacterActions = {
   },
 
   switchChar(id) {
-    CharacterAPIUtils.setCurrent(id, function(data) {
-      AppDispatcher.dispatch({
-        actionType: 'SWITCH_CHAR',
-        character: data.character
-      });
+    AppDispatcher.dispatch({
+      actionType: 'SWITCH_CHAR',
+      characterId: id
     });
     RollActions.load({characterId: id});
   },
 
   load(data) {
-    CharacterAPIUtils.getCurrentChar(this.receiveCurrentChar);
     CharacterAPIUtils.getAll(this.receiveAll);
     AppDispatcher.dispatch({
       actionType: 'LOADING_CURRENT_CHAR'

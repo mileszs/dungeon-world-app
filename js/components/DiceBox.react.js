@@ -41,7 +41,7 @@ let RollHistory = React.createClass({
 let DiceForm = React.createClass({
   handleAction(e) {
     e.preventDefault();
-    var action = e.target.value;
+    let action = e.target.value;
     RollActions.create({action: action, character: this.props.currentCharacter});
   },
 

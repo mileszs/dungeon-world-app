@@ -12,7 +12,7 @@ let RollActions = {
   },
 
   load(data) {
-    RollAPIUtils.getCharacterRolls(data.characterId, this.receiveAll);
+    RollAPIUtils.getAllRolls(this.receiveAll);
     AppDispatcher.dispatch({
       actionType: 'LOADING_ROLL_HISTORY'
     });

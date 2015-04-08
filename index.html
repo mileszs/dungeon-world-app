@@ -12,13 +12,63 @@
       #current, #character-list, #rolls, #character-form, #character-validation-messages {
         border: 1px solid #666;
       }
-      #current, #rolls, #character-list, #character-form, #character-validation-messages  {
+      #current, #rolls, #character-list {
         float: left;
         width: 300px;
         margin: 12px;
       }
+      #character-form, #character-validation-messages {
+        width: 800px;
+      }
       .clear {
         clear: both;
+      }
+      .dnd-source-objects, .dnd-drop-targets {
+        height: 150px;
+        margin: 0;
+        padding: 0;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        -o-user-select: none;
+        user-select: none;
+      }
+      .dnd-source-object {
+        display: inline-block;
+        width: 100px;
+        margin: 0 4px;
+        border-radius: 60px;
+        border: 1px solid #ddd;
+        font-weight: bold;
+        font-size: 24px;
+        text-align: center;
+        cursor: move;
+      }
+      .dnd-draggable.dragging {
+        z-index: 1;
+        pointer-events: none;
+        box-shadow: 0 2px 5px rgba(0,0,0,.8);
+      }
+      .hover {
+       background-color: #ddd;
+      }
+      .dnd-drop-target {
+        display: inline-block;
+        width: 100px;
+        height: 100px;
+        margin: 0 4px;
+        border-radius: 60px;
+        border: 1px solid #ddd;
+        font-weight: bold;
+        font-size: 24px;
+        text-align: center;
+        background-color: 'blue';
+      }
+      .dnd-drop-target div.selected-stat {
+        font-size: 24px;
+        font-weight: bold;
       }
     </style>
   </head>

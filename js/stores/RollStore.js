@@ -14,6 +14,13 @@ let RollStore = assign({}, EventEmitter.prototype, {
     return rolls;
   },
 
+  getCharacterRolls(characterId) {
+    rolls = _.filter(rolls, function(roll) { 
+      return roll.character.id === characterId;
+    });
+    return rolls;
+  },
+
   emitChange: function() {
     this.emit(CHANGE_EVENT);
   },

@@ -1,11 +1,13 @@
 class Character {
-  constructor(name, attrs) {
+  constructor(obj) {
     this.CHAR_ATTRS = ['str', 'con', 'dex', 'int', 'wis', 'cha'];
     this.id = this._generateId();
-    this.name = name;
+    this.name = obj.name;
+    this.race = obj.race;
+    this.klass = obj.klass
     this.mods = {};
     for (var i = 0; i < this.CHAR_ATTRS.length; i++) {
-      this[this.CHAR_ATTRS[i]] = attrs[this.CHAR_ATTRS[i]];
+      this[this.CHAR_ATTRS[i]] = obj[this.CHAR_ATTRS[i]];
     }
     this.calculateMods();
   }

@@ -1,4 +1,5 @@
 import AppDispatcher from '../dispatcher/AppDispatcher';
+import _ from 'lodash';
 import Character from '../models/Character.js';
 import Events from 'events';
 import assign from 'object-assign';
@@ -15,6 +16,13 @@ let CharacterStore = assign({}, EventEmitter.prototype, {
   },
 
   current() {
+    if (_.isEmpty(current)) {
+      let characterAry = [];
+      for (var key in characters) {
+        characterAry.push(characters[key]);
+      }
+      current = characterAry[characterAry.length-1];
+    }
     return current;
   },
 
@@ -34,15 +42,15 @@ let CharacterStore = assign({}, EventEmitter.prototype, {
 AppDispatcher.register(function(action) {
   switch(action.actionType) {
     case 'SWITCH_CHAR':
-      current = action.character;
+      current = characters[action.characterId];
       CharacterStore.emitChange();
       break;
     case 'NEW_CHAR':
-      characters.push(action.character);
+      characters[action.data.character.id] = action.data.character;
       CharacterStore.emitChange();
       break;
     case 'LOADED_CURRENT_CHAR':
-      current = action.character;
+      current = characters[action.characterId];
       CharacterStore.emitChange();
       break;
     case 'LOADED_ALL_CHARS':
