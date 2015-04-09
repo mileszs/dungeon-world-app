@@ -4,14 +4,23 @@ import CharacterActions from '../actions/CharacterActions';
 import StatActions from '../actions/StatActions';
 import Stats from './Stats.react';
 import Statboxes from './Statboxes.react';
+import StatStore from '../stores/StatStore';
 
+function getCharacterFormState() {
+  let stats = StatStore.getAll();
+  return {
+    stats: stats.stats,
+    availableNumbers: stats.availableNumbers
+  }
+}
 // TODO: need to make validation messages use local state or a store or something.
 let CharacterForm = React.createClass({
   getInitialState() {
-    return {
-      currentDragItem: null,
-      validationMessages: []
-    }
+    let initial = getCharacterFormState()
+    console.log(initial)
+    let subsequent = _.merge(initial, { currentDragItem: null, validationMessages: [] })
+    console.log(subsequent)
+    return subsequent
   },
 
   render() {
@@ -35,8 +44,8 @@ let CharacterForm = React.createClass({
             <label htmlFor="klass">Class</label>
             <input type="text" ref="klass" name="klass" id="klass" size="20" />
           </div>
-          <Stats numbers={this.props.availableNumbers} onDragStart={this.handleDragStart} onDragStop={this.handleDragStop} />
-          <Statboxes stats={this.props.stats} currentDragItem={this.state.currentDragItem} onDrop={this.handleDrop} />
+          <Stats numbers={this.state.availableNumbers} onDragStart={this.handleDragStart} onDragStop={this.handleDragStop} />
+          <Statboxes stats={this.state.stats} currentDragItem={this.state.currentDragItem} onDrop={this.handleDrop} />
           <div className="form-submit">
             <input type="submit" name="submit" value="Save" />
           </div>
@@ -48,21 +57,20 @@ let CharacterForm = React.createClass({
   handleSubmit(e) {
     e.preventDefault();
     var data = {};
-    var msg = this._validCharacter();
+    var msg = this.validCharacter();
     if (_.isEmpty(msg)) {
       _.each($('#character-form form input, #character-form form select'), function(el) {
         data[$(el).prop('name')] = $(el).val().trim();
         $(el).val('');
       });
-      data = _.merge(data, this.props.stats)
+      data = _.merge(data, this.state.stats)
       CharacterActions.create(data);
     }
   },
 
-
-  _validCharacter() {
+  validCharacter() {
     var name = $('#name').val();
-    var values = _.values(this.props.stats);
+    var values = _.values(this.state.stats);
     var msgs = [];
     if (_.isEmpty(name)) {
       msgs.push('You must provide a name for your character.')
@@ -94,6 +102,18 @@ let CharacterForm = React.createClass({
       },
       numbers: _.without(nums, this.state.currentDragItem.num)
     });
+  },
+
+  componentDidMount() {
+    StatStore.addChangeListener(this._onChange);
+  },
+
+  componentWillUnmount() {
+    StatStore.addChangeListener(this._onChange)
+  },
+
+  _onChange() {
+    this.setState(getCharacterFormState());
   }
 });
 

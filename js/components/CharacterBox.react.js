@@ -10,7 +10,6 @@ let CharacterBox = React.createClass({
       <div id="characters">
         <CharacterList characters={this.props.characters} />
         <div className="clear"></div>
-        <CharacterForm stats={this.props.stats} availableNumbers={this.props.availableNumbers} />
       </div>
     );
   },
