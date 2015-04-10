@@ -7,7 +7,7 @@ let RollAPIUtils = {
     if (_.isFunction(callback)) {
       callback({rolls: rolls});
     }
-    return rolls;
+    return rolls || [];
   },
 
   getCharacterRolls(characterId, callback) {
@@ -18,7 +18,7 @@ let RollAPIUtils = {
     if (_.isFunction(callback)) {
       callback({rolls: rolls});
     }
-    return rolls;
+    return rolls || [];
   },
 
  create(character, action, callback) {
