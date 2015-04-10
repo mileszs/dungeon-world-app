@@ -3,8 +3,9 @@ import _ from 'lodash';
 
 import CharacterActions from '../actions/CharacterActions';
 import RollActions from '../actions/RollActions';
-import CharacterBox from './CharacterBox.react';
-import DiceBox from './DiceBox.react';
+import CharacterList from './CharacterList.react';
+import RollHistory from './RollHistory.react';
+import DiceForm from './DiceForm.react';
 import CurrentCharacterDetails from './CurrentCharacterDetails.react';
 
 import CharacterStore from '../stores/CharacterStore';
@@ -36,10 +37,14 @@ let Dashboard = React.createClass({
     }
     return (
       <div>
-        <CurrentCharacterDetails current={this.state.current} />
-        <DiceBox current={this.state.current} rolls={this.state.rolls} />
-        <div style={clearStyle}></div>
-        <CharacterBox characters={this.state.characters} />
+        <div className="row">
+          <CharacterList characters={this.state.characters} currentChar={this.state.current} />
+        </div>
+        <div className="row">
+          <CurrentCharacterDetails current={this.state.current} />
+          <RollHistory rolls={this.state.rolls} />
+          <DiceForm currentCharacter={this.state.current}/>
+        </div>
       </div>
     )
   },
