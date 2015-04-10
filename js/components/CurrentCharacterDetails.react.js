@@ -1,12 +1,19 @@
 import React from 'react';
 import {Panel} from 'react-bootstrap'
+import {Link} from 'react-router'
 
 let CurrentCharacterDetails = React.createClass({
   render() {
+    const title = <h3>Character Sheet</h3>
     if (this.props.current === undefined || this.props.current === null) {
-      return null;
+      return (
+        <div id="current" className='col-xs-4'>
+          <Panel header={title}>
+            <p>No Characters Available. Go <Link to="newCharacter">Create one now!</Link></p>
+          </Panel>
+        </div>
+      )
     } else {
-      const title = <h3>Character Sheet</h3>
       return (
         <div id="current" className='col-xs-4'>
           <Panel header={title}>

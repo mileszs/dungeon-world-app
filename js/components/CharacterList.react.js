@@ -5,13 +5,14 @@ import CharacterActions from '../actions/CharacterActions';
 
 let CharacterList = React.createClass({
   render() {
-    var characterItems = [];
+    let characterItems = [];
+    let buttonTitle = this.props.currentChar ? this.props.currentChar.name : 'No Characters Available'
     for (var key in this.props.characters) {
       characterItems.push(<CharacterItem key={key} character={this.props.characters[key]} active={this.props.currentChar.id === this.props.characters[key].id} />);
     }
     return (
       <div id="character-list" className="col-xs-12">
-        <DropdownButton title={this.props.currentChar.name} bsSize='large'>
+        <DropdownButton title={buttonTitle} bsSize='large'>
           {characterItems}
         </DropdownButton>
       </div>
