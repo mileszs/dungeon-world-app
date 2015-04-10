@@ -15,7 +15,7 @@ let Draggable = React.createClass({
 
   style() {
     if (this.state.dragging) {
-      return { position: 'absolute', left: this.state.left, top: this.state.top };
+      return { position: 'absolute', left: this.state.left, top: this.state.top};
     } else {
       return {};
     }
@@ -34,11 +34,12 @@ let Draggable = React.createClass({
       e.stopPropagation();
       this.addEvents();
       let pageOffset = this.getDOMNode().getBoundingClientRect();
+      let elementOffsetX = e.target.offsetParent.offsetLeft;
       this.setState({
         mouseDown: true,
         originX: e.pageX,
         originY: e.pageY,
-        elementX: pageOffset.left,
+        elementX: pageOffset.left - elementOffsetX,
         elementY: pageOffset.top
       });
     }

@@ -1,10 +1,12 @@
 import React from 'react';
 import _ from 'lodash';
+import {Input} from 'react-bootstrap'
 import CharacterActions from '../actions/CharacterActions';
 import StatActions from '../actions/StatActions';
 import Stats from './Stats.react';
 import Statboxes from './Statboxes.react';
 import StatStore from '../stores/StatStore';
+import CharacterConstants from '../models/CharacterConstants'
 
 function getCharacterFormState() {
   let stats = StatStore.getAll();
@@ -28,30 +30,37 @@ let CharacterForm = React.createClass({
       return <li>{msg}</li>
     })
     return (
-      <div id="character-form">
+      <div id="character-form" className="col-xs-6 col-xs-offset-3">
         <h3>New Character</h3>
         <ul>{validationMsgElements}</ul>
         <form onSubmit={this.handleSubmit}>
-          <div className="form-textfield">
-            <label htmlFor="name">Name</label>
-            <input type="text" ref="name" name="name" id="name" size="20" />
-          </div>
-          <div className="form-textfield">
-            <label htmlFor="race">Race</label>
-            <input type="text" ref="race" name="race" id="race" size="20" />
-          </div>
-          <div className="form-textfield">
-            <label htmlFor="klass">Class</label>
-            <input type="text" ref="klass" name="klass" id="klass" size="20" />
-          </div>
+          <Input type="text" ref="name" name="name" id="name" label="Name" />
+          <Input type="select" ref="race" name="race" id="race" label="Race">
+            {this.renderRaceOptions()}
+          </Input>
+          <Input type="select" ref="klass" name="klass" id="klass" label="Class">
+            {this.renderClassOptions()}
+          </Input>
           <Stats numbers={this.state.availableNumbers} onDragStart={this.handleDragStart} onDragStop={this.handleDragStop} />
           <Statboxes stats={this.state.stats} currentDragItem={this.state.currentDragItem} onDrop={this.handleDrop} />
           <div className="form-submit">
-            <input type="submit" name="submit" value="Save" />
+            <input type="submit" name="submit" value="Save" className='btn btn-primary' />
           </div>
         </form>
       </div>
     );
+  },
+
+  renderRaceOptions() {
+    return CharacterConstants.RACES.map(function(race) {
+      return <option value={race}>{race}</option>
+    })
+  },
+
+  renderClassOptions() {
+    return CharacterConstants.CLASSES.map(function(klass) {
+      return <option value={klass}>{klass}</option>
+    })
   },
 
   handleSubmit(e) {
@@ -59,9 +68,9 @@ let CharacterForm = React.createClass({
     var data = {};
     var msg = this.validCharacter();
     if (_.isEmpty(msg)) {
-      _.each($('#character-form form input, #character-form form select'), function(el) {
-        data[$(el).prop('name')] = $(el).val().trim();
-        $(el).val('');
+      _.each(this.refs, function(ref, name) {
+        data[name] = ref.getValue().trim();
+        ref.getInputDOMNode().value = '';
       });
       data = _.merge(data, this.state.stats)
       CharacterActions.create(data);

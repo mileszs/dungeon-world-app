@@ -41,6 +41,7 @@ let StatBox = React.createClass({
     let classes = ['dnd-drop-target']
     if (this.active()) { classes.push('active') }
     if (this.state.hover) { classes.push('hover') }
+    if (this.props.num) { classes.push('taken') }
     return classes.join(' ')
   },
 

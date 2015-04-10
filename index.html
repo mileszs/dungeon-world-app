@@ -6,9 +6,9 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
     <style>
       .dnd-source-objects, .dnd-drop-targets {
-        height: 150px;
-        margin: 0;
+        margin: 0 -5px;
         padding: 0;
+        overflow: hidden;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
         -khtml-user-select: none;
@@ -18,18 +18,20 @@
         user-select: none;
       }
       .dnd-source-object {
-        display: inline-block;
+        float: left;
         width: 100px;
-        margin: 0 4px;
+        height: 100px;
+        margin: 0 5px;
         border-radius: 60px;
         border: 1px solid #ddd;
         font-weight: bold;
         font-size: 24px;
         text-align: center;
         cursor: move;
+        background-color: lightblue
       }
       .dnd-draggable.dragging {
-        z-index: 1;
+        z-index: 1024;
         pointer-events: none;
         box-shadow: 0 2px 5px rgba(0,0,0,.8);
       }
@@ -37,16 +39,18 @@
        background-color: #ddd;
       }
       .dnd-drop-target {
-        display: inline-block;
+        float: left;
         width: 100px;
         height: 100px;
-        margin: 0 4px;
+        margin: 0 5px;
         border-radius: 60px;
         border: 1px solid #ddd;
         font-weight: bold;
         font-size: 24px;
         text-align: center;
-        background-color: 'blue';
+      }
+      .dnd-drop-target.taken {
+        background-color: lightblue;
       }
       .dnd-drop-target div.selected-stat {
         font-size: 24px;

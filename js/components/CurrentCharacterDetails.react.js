@@ -14,10 +14,13 @@ let CurrentCharacterDetails = React.createClass({
         </div>
       )
     } else {
+      console.log(this.props.current)
       return (
         <div id="current" className='col-xs-4'>
           <Panel header={title}>
             <h4>Name: {this.props.current.name}</h4>
+            <p><strong>Race</strong>: {this.props.current.race}</p>
+            <p><strong>Class</strong>: {this.props.current.klass}</p>
             <ul>
               <li><strong>STR</strong>: {this.props.current.str}</li>
               <li><strong>DEX</strong>: {this.props.current.dex}</li>
