@@ -16,7 +16,6 @@ On other systems: I mean you get the idea, right?
 
 ## TODO / Wishlist
 
-+ Add reset button to the new character form
 + Redirect back to the dashboard after adding a character, with that char the new current char
 + Instead of listing stats on the sheet alphabetically, sort by mod? In theory, you will be using your +2 stat more often.
 + Model character sheet arrangement on default Dungeon Wolrd sheets (like, printable ones). OR whatever the community thinks is the best paper sheet.
