@@ -19,9 +19,7 @@ function getCharacterFormState() {
 let CharacterForm = React.createClass({
   getInitialState() {
     let initial = getCharacterFormState()
-    console.log(initial)
     let subsequent = _.merge(initial, { currentDragItem: null, validationMessages: [] })
-    console.log(subsequent)
     return subsequent
   },
 
@@ -43,8 +41,9 @@ let CharacterForm = React.createClass({
           </Input>
           <Stats numbers={this.state.availableNumbers} onDragStart={this.handleDragStart} onDragStop={this.handleDragStop} />
           <Statboxes stats={this.state.stats} currentDragItem={this.state.currentDragItem} onDrop={this.handleDrop} />
-          <div className="form-submit">
-            <input type="submit" name="submit" value="Save" className='btn btn-primary' />
+          <div className='form-submit'>
+            <input type='submit' name='submit' value='Save' className='btn btn-primary' />
+            <input type='reset' name='reset' value='Reset' className='btn' onClick={this.handleReset} />
           </div>
         </form>
       </div>
@@ -75,6 +74,10 @@ let CharacterForm = React.createClass({
       data = _.merge(data, this.state.stats)
       CharacterActions.create(data);
     }
+  },
+
+  handleReset(e) {
+    StatActions.reset();
   },
 
   validCharacter() {

@@ -48,14 +48,18 @@ let StatStore = assign({}, EventEmitter.prototype, {
 AppDispatcher.register(function(action) {
   switch(action.actionType) {
     case 'STAT_DROPPED':
-      stats[action.attr] = action.num;
-      availableNumbers = _.difference(statNumbers, _.values(stats));
-      StatStore.emitChange();
-      break;
+      stats[action.attr] = action.num
+      availableNumbers = _.difference(statNumbers, _.values(stats))
+      StatStore.emitChange()
+      break
     case 'NEW_CHAR':
       StatStore.reset()
-      StatStore.emitChange();
-      break;
+      StatStore.emitChange()
+      break
+    case 'FORM_RESET':
+      StatStore.reset()
+      StatStore.emitChange()
+      break
     default:
       // no op
   }

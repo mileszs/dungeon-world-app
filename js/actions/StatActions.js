@@ -7,6 +7,12 @@ let StatActions = {
       attr: data.attr,
       num: data.num
     });
+  },
+
+  reset() {
+    AppDispatcher.dispatch({
+      actionType: 'FORM_RESET',
+    })
   }
 }
 
