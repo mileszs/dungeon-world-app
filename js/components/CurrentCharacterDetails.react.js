@@ -22,7 +22,7 @@ let CurrentCharacterDetails = React.createClass({
             <div className="statboxes clearfix">
               {this.renderStats()}
             </div>
-            <div className="row clearfix">
+            <div className="row">
               <div className="col-xs-3 text-center">
                 <p><span className="char-label">Name:</span> {this.props.current.name}</p>
               </div>
@@ -34,6 +34,17 @@ let CurrentCharacterDetails = React.createClass({
               </div>
               <div className="col-xs-3 text-center">
                 <p><span className="char-label">HP:</span> {this.props.current.hp}</p>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-xs-4 text-center">
+                <p><span className="char-label">Level:</span> 1</p>
+              </div>
+              <div className="col-xs-4 text-center">
+                <p><span className="char-label">Current XP:</span> 0</p>
+              </div>
+              <div className="col-xs-4 text-center">
+                <p><span className="char-label">XP for Level 2:</span> 8</p>
               </div>
             </div>
           </Panel>
