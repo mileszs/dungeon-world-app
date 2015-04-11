@@ -15,7 +15,7 @@ let RollHistory = React.createClass({
         <Panel header={title}>
           <table className="table roll-history">
             <tbody>
-              {_(rollNodes).reverse().value()}
+              {rollNodes.reverse()}
             </tbody>
           </table>
         </Panel>

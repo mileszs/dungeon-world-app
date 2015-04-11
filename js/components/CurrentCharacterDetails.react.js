@@ -54,9 +54,13 @@ let CurrentCharacterDetails = React.createClass({
   },
 
   renderStats() {
-    return _.map(['cha', 'con', 'dex', 'int', 'str', 'wis'], (stat) => {
-      return <FullStatBox attr={stat} value={this.props.current[stat]} mod={this.modWithSign(this.props.current.mods[stat])} />
+    let stats = _.map(['cha', 'con', 'dex', 'int', 'str', 'wis'], (stat) => {
+      return {name: stat, number: this.props.current[stat], mod: this.props.current.mods[stat]}
     })
+    stats = _.sortBy(stats, 'mod')
+    return _.map(stats, (stat) => {
+      return <FullStatBox key={stat.name} attr={stat.name} value={stat.number} mod={this.modWithSign(stat.mod)} />
+    }).reverse()
   },
 
   modWithSign(mod) {
