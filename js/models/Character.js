@@ -1,14 +1,17 @@
+import CharacterConstants from './CharacterConstants'
+
 class Character {
   constructor(obj) {
     this.CHAR_ATTRS = ['str', 'con', 'dex', 'int', 'wis', 'cha'];
     this.id = this._generateId();
     this.name = obj.name;
     this.race = obj.race;
-    this.klass = obj.klass
+    this.klass = obj.klass;
     this.mods = {};
     for (var i = 0; i < this.CHAR_ATTRS.length; i++) {
       this[this.CHAR_ATTRS[i]] = obj[this.CHAR_ATTRS[i]];
     }
+    this.hp = this.calculateHP();
     this.calculateMods();
   }
 
@@ -33,6 +36,10 @@ class Character {
         }
       }
     }
+  }
+
+  calculateHP() {
+    return parseInt(this.con) + parseInt(CharacterConstants[this.klass].HP_MOD)
   }
 
   _generateId() {
