@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import CharacterConstants from './CharacterConstants'
 
 class Character {
@@ -8,11 +9,15 @@ class Character {
     this.race = obj.race;
     this.klass = obj.klass;
     this.mods = {};
-    for (var i = 0; i < this.CHAR_ATTRS.length; i++) {
-      this[this.CHAR_ATTRS[i]] = obj[this.CHAR_ATTRS[i]];
-    }
+    this.setAttrs(obj);
     this.hp = this.calculateHP();
     this.calculateMods();
+  }
+
+  setAttrs(obj) {
+    _.map(this.CHAR_ATTRS, (attr) => {
+      this[attr] = obj[attr];
+    })
   }
 
   calculateMods() {
