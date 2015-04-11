@@ -1,6 +1,7 @@
 import AppDispatcher from '../dispatcher/AppDispatcher';
 import RollActions from '../actions/RollActions';
 import CharacterAPIUtils from '../utils/CharacterAPIUtils';
+import router from '../router'
 
 let CharacterActions = {
   create(data) {
@@ -9,6 +10,7 @@ let CharacterActions = {
         actionType: 'NEW_CHAR',
         data: data
       });
+      router.transitionTo('/')
     })
   },
 

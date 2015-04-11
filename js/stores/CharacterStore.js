@@ -47,6 +47,7 @@ AppDispatcher.register(function(action) {
       break;
     case 'NEW_CHAR':
       characters[action.data.character.id] = action.data.character;
+      current = action.data.character;
       CharacterStore.emitChange();
       break;
     case 'LOADED_CURRENT_CHAR':
