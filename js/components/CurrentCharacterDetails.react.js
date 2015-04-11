@@ -14,7 +14,6 @@ let CurrentCharacterDetails = React.createClass({
         </div>
       )
     } else {
-      console.log(this.props.current)
       return (
         <div id="current" className='col-xs-4'>
           <Panel header={title}>
