@@ -25,7 +25,7 @@
   },
   "scripts": {
     "start": "watchify -o js/bundle.js -v -d -t babelify .",
-    "build": "NODE_ENV=production browserify -t babelify . | uglifyjs -cm > js/bundle.min.js",
+    "build_for_prod": "NODE_ENV=production browserify -t babelify . | uglifyjs -cm > js/bundle.min.js",
     "test": "jest"
   },
   "author": "Miles Z. Sterrett",
