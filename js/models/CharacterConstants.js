@@ -4,7 +4,7 @@ export default {
   bard: { HP_MOD: 6 },
   cleric: { HP_MOD: 8 },
   druid: { HP_MOD: 6 },
-  figher: { HP_MOD: 10 },
+  fighter: { HP_MOD: 10 },
   paladin: { HP_MOD: 10 },
   ranger: { HP_MOD: 8 },
   thief: { HP_MOD: 6 },
