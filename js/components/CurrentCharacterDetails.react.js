@@ -1,6 +1,8 @@
 import React from 'react';
+import _ from 'lodash'
 import {Panel} from 'react-bootstrap'
 import {Link} from 'react-router'
+import FullStatBox from './FullStatBox.react'
 
 let CurrentCharacterDetails = React.createClass({
   render() {
@@ -15,24 +17,44 @@ let CurrentCharacterDetails = React.createClass({
       )
     } else {
       return (
-        <div id="current" className='col-xs-4'>
+        <div id="current" className='col-xs-6 col-xs-offset-3'>
           <Panel header={title}>
-            <h4>Name: {this.props.current.name}</h4>
-            <p><strong>Race</strong>: {this.props.current.race}</p>
-            <p><strong>Class</strong>: {this.props.current.klass}</p>
-            <ul>
-              <li><strong>STR</strong>: {this.props.current.str}</li>
-              <li><strong>DEX</strong>: {this.props.current.dex}</li>
-              <li><strong>CON</strong>: {this.props.current.con}</li>
-              <li><strong>CHA</strong>: {this.props.current.cha}</li>
-              <li><strong>INT</strong>: {this.props.current.int}</li>
-              <li><strong>WIS</strong>: {this.props.current.wis}</li>
-            </ul>
+            <div className="statboxes clearfix">
+              {this.renderStats()}
+            </div>
+            <div className="row clearfix">
+              <div className="col-xs-3 text-center">
+                <p><span className="char-label">Name:</span> {this.props.current.name}</p>
+              </div>
+              <div className="col-xs-3 text-center">
+                <p><span className="char-label">Race:</span> {this.props.current.race}</p>
+              </div>
+              <div className="col-xs-3 text-center">
+                <p><span className="char-label">Class:</span> {this.props.current.klass}</p>
+              </div>
+              <div className="col-xs-3 text-center">
+                <p><span className="char-label">HP:</span> {this.props.current.hp}</p>
+              </div>
+            </div>
           </Panel>
         </div>
       );
     }
   },
+
+  renderStats() {
+    return _.map(['cha', 'con', 'dex', 'int', 'str', 'wis'], (stat) => {
+      return <FullStatBox attr={stat} value={this.props.current[stat]} mod={this.modWithSign(this.props.current.mods[stat])} />
+    })
+  },
+
+  modWithSign(mod) {
+    if (parseInt(mod) >= 0) {
+      return '+' + mod
+    } else {
+      return mod
+    }
+  }
 });
 
 export default CurrentCharacterDetails;
