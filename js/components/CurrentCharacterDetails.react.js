@@ -9,7 +9,7 @@ let CurrentCharacterDetails = React.createClass({
     const title = <h3>Character Sheet</h3>
     if (this.props.current === undefined || this.props.current === null) {
       return (
-        <div id="current" className='col-xs-4'>
+        <div id="current" className='col-xs-6 col-xs-offset-3'>
           <Panel header={title}>
             <p>No Characters Available. Go <Link to="newCharacter">Create one now!</Link></p>
           </Panel>
@@ -23,17 +23,14 @@ let CurrentCharacterDetails = React.createClass({
               {this.renderStats()}
             </div>
             <div className="row">
-              <div className="col-xs-3 text-center">
+              <div className="col-xs-4 text-center">
                 <p><span className="char-label">Name:</span> {this.props.current.name}</p>
               </div>
-              <div className="col-xs-3 text-center">
+              <div className="col-xs-4 text-center">
                 <p><span className="char-label">Race:</span> {this.props.current.race}</p>
               </div>
-              <div className="col-xs-3 text-center">
+              <div className="col-xs-4 text-center">
                 <p><span className="char-label">Class:</span> {this.props.current.klass}</p>
-              </div>
-              <div className="col-xs-3 text-center">
-                <p><span className="char-label">HP:</span> {this.props.current.hp}</p>
               </div>
             </div>
             <div className="row">
@@ -47,6 +44,14 @@ let CurrentCharacterDetails = React.createClass({
                 <p><span className="char-label">XP for Level 2:</span> 8</p>
               </div>
             </div>
+            <div className="row">
+              <div className="col-xs-6 text-center">
+                <p><span className="char-label">HP:</span> {this.props.current.hp}</p>
+              </div>
+              <div className="col-xs-6 text-center">
+                <p><span className="char-label">Dmg:</span> {this.props.current.dmg}</p>
+              </div>
+            </div>
           </Panel>
         </div>
       );
@@ -54,13 +59,12 @@ let CurrentCharacterDetails = React.createClass({
   },
 
   renderStats() {
-    let stats = _.map(['cha', 'con', 'dex', 'int', 'str', 'wis'], (stat) => {
-      return {name: stat, number: this.props.current[stat], mod: this.props.current.mods[stat]}
-    })
-    stats = _.sortBy(stats, 'mod')
-    return _.map(stats, (stat) => {
-      return <FullStatBox key={stat.name} attr={stat.name} value={stat.number} mod={this.modWithSign(stat.mod)} />
-    }).reverse()
+    return _(['cha', 'con', 'dex', 'int', 'str', 'wis'])
+      .map((stat) => { return { name: stat, number: this.props.current[stat], mod: this.props.current.mods[stat]} })
+      .sortBy((obj) => { return parseInt(obj.number) })
+      .reverse()
+      .map((stat) => { return <FullStatBox key={stat.name} attr={stat.name} value={stat.number} mod={this.modWithSign(stat.mod)} /> })
+      .value()
   },
 
   modWithSign(mod) {

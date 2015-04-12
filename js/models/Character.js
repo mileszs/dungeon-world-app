@@ -11,6 +11,7 @@ class Character {
     this.mods = {};
     this.setAttrs(obj);
     this.hp = this.calculateHP();
+    this.dmg = CharacterConstants[this.klass].DMG;
     this.calculateMods();
   }
 
