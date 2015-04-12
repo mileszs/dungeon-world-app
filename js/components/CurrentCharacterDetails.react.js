@@ -6,8 +6,8 @@ import FullStatBox from './FullStatBox.react'
 
 let CurrentCharacterDetails = React.createClass({
   render() {
-    const title = <h3>Character Sheet</h3>
     if (this.props.current === undefined || this.props.current === null) {
+      const title = <h3>Character Sheet</h3>
       return (
         <div id="current" className='col-xs-6 col-xs-offset-3'>
           <Panel header={title}>
@@ -16,22 +16,12 @@ let CurrentCharacterDetails = React.createClass({
         </div>
       )
     } else {
+      const title = <h3>{this.props.current.name}, {this.props.current.race} {this.props.current.klass}</h3>
       return (
         <div id="current" className='col-xs-6 col-xs-offset-3'>
           <Panel header={title}>
             <div className="statboxes clearfix">
               {this.renderStats()}
-            </div>
-            <div className="row">
-              <div className="col-xs-4 text-center">
-                <p><span className="char-label">Name:</span> {this.props.current.name}</p>
-              </div>
-              <div className="col-xs-4 text-center">
-                <p><span className="char-label">Race:</span> {this.props.current.race}</p>
-              </div>
-              <div className="col-xs-4 text-center">
-                <p><span className="char-label">Class:</span> {this.props.current.klass}</p>
-              </div>
             </div>
             <div className="row">
               <div className="col-xs-4 text-center">
@@ -45,10 +35,10 @@ let CurrentCharacterDetails = React.createClass({
               </div>
             </div>
             <div className="row">
-              <div className="col-xs-6 text-center">
+              <div className="col-xs-4 text-center">
                 <p><span className="char-label">HP:</span> {this.props.current.hp}</p>
               </div>
-              <div className="col-xs-6 text-center">
+              <div className="col-xs-4 text-center">
                 <p><span className="char-label">Dmg:</span> {this.props.current.dmg}</p>
               </div>
             </div>
