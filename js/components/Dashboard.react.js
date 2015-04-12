@@ -3,7 +3,7 @@ import _ from 'lodash';
 
 import CharacterActions from '../actions/CharacterActions';
 import CharacterList from './CharacterList.react';
-import CurrentCharacterDetails from './CurrentCharacterDetails.react';
+import CharacterSheet from './CharacterSheet.react';
 
 import CharacterStore from '../stores/CharacterStore';
 
@@ -31,7 +31,7 @@ let Dashboard = React.createClass({
           <CharacterList characters={this.state.characters} currentChar={this.state.current} />
         </div>
         <div className="row">
-          <CurrentCharacterDetails current={this.state.current} />
+          <CharacterSheet current={this.state.current} />
         </div>
       </div>
     )
