@@ -7,7 +7,7 @@ let Statboxes = React.createClass({
   render() {
     var attrs = _.keys(this.props.stats);
     let children = _.map(attrs, (attr, i) => {
-      return <StatBox attr={attr} num={this.props.stats[attr]} index={i} currentDragItem={this.props.currentDragItem} onDrop={this.props.onDrop} />
+      return <StatBox key={attr} attr={attr} num={this.props.stats[attr]} index={i} currentDragItem={this.props.currentDragItem} onDrop={this.props.onDrop} />
     })
     return (
       <div className='dnd-drop-targets'>{children}</div>

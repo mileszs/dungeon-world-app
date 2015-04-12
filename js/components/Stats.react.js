@@ -6,7 +6,7 @@ import Draggable from './Draggable.react';
 let Stats = React.createClass({
   render() {
     let children = _.map(this.props.numbers, (num, i) => {
-      return <Stat num={num} index={i+1} onDragStart={this.props.onDragStart} onDragStop={this.props.onDragStop} />
+      return <Stat key={num} num={num} index={i+1} onDragStart={this.props.onDragStart} onDragStop={this.props.onDragStop} />
     })
     return (
       <div className='dnd-source-objects'>{children}</div>

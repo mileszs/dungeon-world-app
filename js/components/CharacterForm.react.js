@@ -52,13 +52,13 @@ let CharacterForm = React.createClass({
 
   renderRaceOptions() {
     return CharacterConstants.RACES.map(function(race) {
-      return <option value={race}>{race}</option>
+      return <option key={race} value={race}>{race}</option>
     })
   },
 
   renderClassOptions() {
     return CharacterConstants.CLASSES.map(function(klass) {
-      return <option value={klass}>{klass}</option>
+      return <option key={klass} value={klass}>{klass}</option>
     })
   },
 
