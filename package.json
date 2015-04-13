@@ -1,5 +1,6 @@
 {
   "name": "dungeon-world-characters-flux",
+  "author": "Miles Z. Sterrett",
   "version": "0.0.1",
   "description": "DW Character Manager w/ React & Flux",
   "repository": "https://github.com/mileszs/dungeon-world-characters-flux",
@@ -15,26 +16,16 @@
     "react-router-bootstrap": "^0.12.1"
   },
   "devDependencies": {
-    "browserify": "^6.2.0",
+    "babel-core": "^5.1.5",
+    "babel-loader": "^5.0.0",
     "jest-cli": "~0.1.17",
-    "reactify": "^0.15.2",
-    "uglify-js": "~2.4.15",
-    "watchify": "^2.1.1",
     "lodash": "~3.5.0",
-    "babelify": "^5.0.4"
+    "react-hot-loader": "^1.2.4",
+    "webpack": "^1.8.4",
+    "webpack-dev-server": "^1.8.0"
   },
   "scripts": {
-    "start": "watchify -o js/bundle.js -v -d -t babelify .",
-    "build_for_prod": "NODE_ENV=production browserify -t babelify . | uglifyjs -cm > js/bundle.min.js",
-    "test": "jest"
-  },
-  "author": "Miles Z. Sterrett",
-  "browserify": {
-    "transform": [
-      "reactify"
-    ]
-  },
-  "jest": {
-    "rootDir": "./js"
+    "start": "webpack-dev-server --hot --progress --colors",
+    "build_for_prod": "webpack --progress --colors"
   }
 }
