@@ -9,7 +9,7 @@ import StatStore from '../stores/StatStore';
 import CharacterConstants from '../models/CharacterConstants'
 
 function getCharacterFormState() {
-  let stats = StatStore.getAll();
+  let stats = StatStore.getState();
   return {
     stats: stats.stats,
     availableNumbers: stats.availableNumbers
@@ -117,11 +117,11 @@ let CharacterForm = React.createClass({
   },
 
   componentDidMount() {
-    StatStore.addChangeListener(this._onChange);
+    StatStore.listen(this._onChange);
   },
 
   componentWillUnmount() {
-    StatStore.addChangeListener(this._onChange)
+    StatStore.unlisten(this._onChange)
   },
 
   _onChange() {

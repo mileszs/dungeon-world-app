@@ -1,19 +1,16 @@
-import AppDispatcher from '../dispatcher/AppDispatcher';
+import alt from '../alt'
 
-let StatActions = {
+class StatActions {
   drop(data) {
-    AppDispatcher.dispatch({
-      actionType: 'STAT_DROPPED',
+    this.dispatch({
       attr: data.attr,
       num: data.num
-    });
-  },
+    })
+  }
 
   reset() {
-    AppDispatcher.dispatch({
-      actionType: 'FORM_RESET',
-    })
+    this.dispatch()
   }
 }
 
-export default StatActions;
+export default alt.createActions(StatActions)

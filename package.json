@@ -6,6 +6,7 @@
   "repository": "https://github.com/mileszs/dungeon-world-characters-flux",
   "main": "js/app.js",
   "dependencies": {
+    "alt": "^0.15.4",
     "classnames": "^1.2.0",
     "flux": "^2.0.1",
     "keymirror": "~0.1.0",
