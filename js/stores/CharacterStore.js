@@ -1,66 +1,50 @@
-import AppDispatcher from '../dispatcher/AppDispatcher';
+// import AppDispatcher from '../dispatcher/AppDispatcher';
+// import _ from 'lodash';
+// import Events from 'events';
+// import assign from 'object-assign';
+
 import _ from 'lodash';
+import alt from '../alt'
+import CharacterActions from '../actions/CharacterActions.js';
 import Character from '../models/Character.js';
-import Events from 'events';
-import assign from 'object-assign';
-let EventEmitter = Events.EventEmitter;
 
-let CHANGE_EVENT = 'change';
+class CharacterStore {
+  constructor() {
+    this.bindActions({
+      onSwitchChar: CharacterActions.switchChar,
+      onNewChar: CharacterActions.create,
+      onLoadedAllChars: CharacterActions.receiveAll
+    })
 
-let characters = {};
-let current = {};
+    this.characters = {};
+    this.current = this.getCurrent();
+  }
 
-let CharacterStore = assign({}, EventEmitter.prototype, {
-  getAll() {
-    return characters;
-  },
-
-  current() {
-    if (_.isEmpty(current)) {
+  getCurrent() {
+    if (_.isEmpty(this.current)) {
       let characterAry = [];
-      for (var key in characters) {
-        characterAry.push(characters[key]);
+      for (var key in this.characters) {
+        characterAry.push(this.characters[key]);
       }
-      current = characterAry[characterAry.length-1];
+      this.current = characterAry[characterAry.length-1]
     }
-    return current;
-  },
-
-  emitChange() {
-    this.emit(CHANGE_EVENT);
-  },
-
-  addChangeListener(callback) {
-    this.on(CHANGE_EVENT, callback);
-  },
-
-  removeChangeListener(callback) {
-    this.removeListener(CHANGE_EVENT, callback);
+    return this.current
   }
-});
 
-AppDispatcher.register(function(action) {
-  switch(action.actionType) {
-    case 'SWITCH_CHAR':
-      current = characters[action.characterId];
-      CharacterStore.emitChange();
-      break;
-    case 'NEW_CHAR':
-      characters[action.data.character.id] = action.data.character;
-      current = action.data.character;
-      CharacterStore.emitChange();
-      break;
-    case 'LOADED_CURRENT_CHAR':
-      current = characters[action.characterId];
-      CharacterStore.emitChange();
-      break;
-    case 'LOADED_ALL_CHARS':
-      characters = action.characters;
-      CharacterStore.emitChange();
-      break;
-    default:
-      // no op
+  onSwitchChar({characterId}) {
+    this.current = this.characters[characterId]
   }
-});
 
-export default CharacterStore;
+  onNewChar({character}) {
+    this.characters[character.id] = character
+    this.current = character
+  }
+
+  onLoadedAllChars(characters) {
+    console.log('onLoadedAllChar', characters)
+    this.characters = characters
+    this.current = this.getCurrent()
+  }
+}
+
+export default alt.createStore(CharacterStore, 'CharacterStore')

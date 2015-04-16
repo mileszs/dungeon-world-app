@@ -7,8 +7,11 @@ let CharacterList = React.createClass({
   render() {
     let characterItems = [];
     let buttonTitle = this.props.currentChar ? this.props.currentChar.name : 'No Characters Available'
+    let active = this.props.currentChar && this.props.characters[key] ? this.props.currentChar.id === this.props.characters[key].id : false
+    if (!_.isUndefined(this.props.currentChar)) {
+    }
     for (var key in this.props.characters) {
-      characterItems.push(<CharacterItem key={key} character={this.props.characters[key]} active={this.props.currentChar.id === this.props.characters[key].id} />);
+      characterItems.push(<CharacterItem key={key} character={this.props.characters[key]} active={active} />);
     }
     return (
       <div id="character-list" className="col-xs-12">

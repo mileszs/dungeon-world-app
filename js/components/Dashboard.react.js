@@ -8,9 +8,9 @@ import CharacterSheet from './CharacterSheet.react';
 import CharacterStore from '../stores/CharacterStore';
 
 function getDashboardState() {
-  let current = CharacterStore.current()
+  let {characters, current} = CharacterStore.getState()
   return {
-    characters: CharacterStore.getAll(),
+    characters: characters,
     current: current,
   };
 }
@@ -38,11 +38,11 @@ let Dashboard = React.createClass({
   },
 
   componentDidMount() {
-    CharacterStore.addChangeListener(this._onChange);
+    CharacterStore.listen(this._onChange);
   },
 
   componentWillUnmount() {
-    CharacterStore.removeChangeListener(this._onChange);
+    CharacterStore.unlisten(this._onChange);
   },
 
   _onChange() {
