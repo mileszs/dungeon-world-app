@@ -12,6 +12,7 @@ function getCharacterFormState() {
   let stats = StatStore.getState();
   return {
     stats: stats.stats,
+    races: [],
     availableNumbers: stats.availableNumbers
   }
 }
@@ -33,11 +34,11 @@ let CharacterForm = React.createClass({
         <ul>{validationMsgElements}</ul>
         <form onSubmit={this.handleSubmit}>
           <Input type="text" ref="name" name="name" id="name" label="Name" />
+          <Input type="select" ref="klass" name="klass" id="klass" label="Class" onChange={this.handleClassChange}>
+            {this.renderClassOptions()}
+          </Input>
           <Input type="select" ref="race" name="race" id="race" label="Race">
             {this.renderRaceOptions()}
-          </Input>
-          <Input type="select" ref="klass" name="klass" id="klass" label="Class">
-            {this.renderClassOptions()}
           </Input>
           <Stats numbers={this.state.availableNumbers} onDragStart={this.handleDragStart} onDragStop={this.handleDragStop} />
           <Statboxes stats={this.state.stats} currentDragItem={this.state.currentDragItem} onDrop={this.handleDrop} />
@@ -51,7 +52,7 @@ let CharacterForm = React.createClass({
   },
 
   renderRaceOptions() {
-    return CharacterConstants.RACES.map(function(race) {
+    return this.state.races.map(function(race) {
       return <option key={race} value={race}>{race}</option>
     })
   },
@@ -60,6 +61,11 @@ let CharacterForm = React.createClass({
     return CharacterConstants.CLASSES.map(function(klass) {
       return <option key={klass} value={klass}>{klass}</option>
     })
+  },
+
+  handleClassChange(e) {
+    let val = e.target.value
+    this.setState({races: CharacterConstants[val].classes})
   },
 
   handleSubmit(e) {
