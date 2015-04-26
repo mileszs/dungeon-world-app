@@ -112,13 +112,13 @@ let CharacterForm = React.createClass({
   },
 
   handleDrop(target) {
-    let nums = this.state.numbers
+    let nums = this.state.availableNumbers
     this.setState({
       lastDrop: {
         source: this.state.currentDragItem,
         target: target
       },
-      numbers: _.without(nums, this.state.currentDragItem.num)
+      availablenumbers: _.without(nums, this.state.currentDragItem.num)
     });
   },
 
