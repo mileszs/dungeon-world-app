@@ -12,7 +12,6 @@ function getCharacterFormState() {
   let stats = StatStore.getState();
   return {
     stats: stats.stats,
-    races: [],
     availableNumbers: stats.availableNumbers
   }
 }
@@ -52,7 +51,8 @@ let CharacterForm = React.createClass({
   },
 
   renderRaceOptions() {
-    return this.state.races.map(function(race) {
+    let races = this.state.races || []
+    return races.map(function(race) {
       return <option key={race} value={race}>{race}</option>
     })
   },
