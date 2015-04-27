@@ -3,7 +3,8 @@ import _ from 'lodash'
 import {Panel, Modal, ModalTrigger, Button} from 'react-bootstrap'
 import {Link} from 'react-router'
 import FullStatBox from './FullStatBox.react'
-import escape from 'escape-html'
+
+import CharacterActions from '../actions/CharacterActions'
 
 const CurrentCharacterDetails = React.createClass({
   render() {
@@ -20,6 +21,7 @@ const CurrentCharacterDetails = React.createClass({
       const title = (
         <div>
           <h3 className='pull-left'>{this.props.current.name}, {this.props.current.race} {this.props.current.klass}</h3>
+          <Button bsStyle='default' bsSize='small' className='pull-right' onClick={this.handleDelete}><span className='glyphicon glyphicon-trash' /> Delete</Button>
           <ExportButton current={this.props.current} />
           <div className='clearfix' />
         </div>
@@ -74,8 +76,8 @@ const CurrentCharacterDetails = React.createClass({
     }
   },
 
-  handleExport(e) {
-
+  handleDelete(e) {
+    CharacterActions.remove(this.props.current.id)
   }
 
 });

@@ -30,6 +30,11 @@ class CharacterActions {
   receiveAll(characters) {
     this.dispatch(characters)
   }
+
+  remove(id) {
+    this.dispatch(id)
+    CharacterAPIUtils.remove(id)
+  }
 }
 
 export default alt.createActions(CharacterActions)

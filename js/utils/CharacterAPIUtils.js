@@ -27,6 +27,13 @@ let CharacterAPIUtils = {
       resolve(character)
     })
   },
+
+  remove(id) {
+    let characters = this.getAllSync()
+    delete characters[id]
+    localStorage.setItem('characters', JSON.stringify(characters))
+    return id
+  }
 };
 
 export default CharacterAPIUtils;

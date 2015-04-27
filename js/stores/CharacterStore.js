@@ -13,7 +13,8 @@ class CharacterStore {
     this.bindActions({
       onSwitchChar: CharacterActions.switchChar,
       onNewChar: CharacterActions.create,
-      onLoadedAllChars: CharacterActions.receiveAll
+      onLoadedAllChars: CharacterActions.receiveAll,
+      onDelete: CharacterActions.remove
     })
 
     this.characters = {};
@@ -44,6 +45,15 @@ class CharacterStore {
     this.characters = characters
     this.current = this.getCurrent()
   }
+
+  onDelete(id) {
+    delete this.characters[id]
+    if (id === this.current.id) {
+      this.current = {}
+      this.getCurrent()
+    }
+  }
+
 }
 
 export default alt.createStore(CharacterStore, 'CharacterStore')
