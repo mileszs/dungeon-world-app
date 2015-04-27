@@ -15,7 +15,7 @@ function getCharacterFormState() {
     availableNumbers: stats.availableNumbers
   }
 }
-// TODO: need to make validation messages use local state or a store or something.
+
 let CharacterForm = React.createClass({
   getInitialState() {
     let initial = getCharacterFormState()
