@@ -39,5 +39,6 @@ import routes from './routes'
 router = Router.create({ routes })
 
 router.run(function(Handler, state) {
-  React.render(<Handler/>, document.getElementById('react'))
+  let params = state.params
+  React.render(<Handler params={params} />, document.getElementById('react'))
 })

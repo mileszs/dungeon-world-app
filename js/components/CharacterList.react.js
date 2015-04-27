@@ -1,6 +1,7 @@
 import React from 'react';
 import _ from 'lodash';
 import {ListGroup, ListGroupItem, DropdownButton, MenuItem} from 'react-bootstrap'
+import {MenuItemLink} from 'react-router-bootstrap'
 import CharacterActions from '../actions/CharacterActions';
 
 let CharacterList = React.createClass({
@@ -25,13 +26,7 @@ let CharacterList = React.createClass({
 
 let CharacterItem = React.createClass({
   render() {
-    return (
-      <MenuItem active={this.props.active} onClick={this.handleClick}>{this.props.character.name}</MenuItem>
-    );
-  },
-
-  handleClick(e) {
-    CharacterActions.switchChar(this.props.character.id);
+    return <MenuItemLink active={this.props.active} to='show' params={{id: this.props.character.id}}>{this.props.character.name}</MenuItemLink>
   }
 });
 

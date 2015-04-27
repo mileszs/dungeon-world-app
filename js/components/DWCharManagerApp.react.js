@@ -17,11 +17,11 @@ let DWCharManagerApp = React.createClass({
       <div>
         <Nav bsStyle='pills'>
           <NavItemLink eventKey={1} to="/">Dashboard</NavItemLink>
-          <NavItemLink eventKey={2} to="newCharacter">New Character</NavItemLink>
+          <NavItemLink eventKey={2} to="/new">New Character</NavItemLink>
         </Nav>
 
         <div className="details">
-          <RouteHandler />
+          <RouteHandler {...this.props} />
         </div>
       </div>
     );

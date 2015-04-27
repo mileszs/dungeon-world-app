@@ -7,9 +7,10 @@ import Dashboard from './components/Dashboard.react';
 import CharacterForm from './components/CharacterForm.react';
 
 const routes = (
-  <Route handler={DWCharManagerApp}>
+  <Route path='/' handler={DWCharManagerApp}>
     <DefaultRoute handler={Dashboard} />
-    <Route name="newCharacter" handler={CharacterForm} />
+    <Route name='new' path='/new' handler={CharacterForm} />
+    <Route name='show' path=':id' handler={Dashboard} />
   </Route>
 );
 

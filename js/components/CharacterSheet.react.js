@@ -12,7 +12,7 @@ const CurrentCharacterDetails = React.createClass({
       return (
         <div id="current" className='col-xs-6 col-xs-offset-3'>
           <Panel header={title}>
-            <p>No Characters Available. Go <Link to="newCharacter">Create one now!</Link></p>
+            <p>No Characters Available. Go <Link to="new">Create one now!</Link></p>
           </Panel>
         </div>
       )

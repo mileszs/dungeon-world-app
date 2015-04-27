@@ -37,6 +37,12 @@ let Dashboard = React.createClass({
     )
   },
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.params && nextProps.params.id && ( this.state.current && nextProps.params.id != this.state.current.id)) {
+      CharacterActions.switchChar(nextProps.params.id)
+    }
+  },
+
   componentDidMount() {
     CharacterStore.listen(this._onChange);
   },

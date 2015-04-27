@@ -41,7 +41,6 @@ class CharacterStore {
   }
 
   onLoadedAllChars(characters) {
-    console.log('onLoadedAllChar', characters)
     this.characters = characters
     this.current = this.getCurrent()
   }
