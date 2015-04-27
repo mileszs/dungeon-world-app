@@ -79,6 +79,7 @@ let CharacterForm = React.createClass({
       });
       data = _.merge(data, this.state.stats)
       CharacterActions.create(data);
+      StatActions.reset()
     }
   },
 
