@@ -25,31 +25,33 @@ const CurrentCharacterDetails = React.createClass({
         </div>
       )
       return (
-        <div id="current" className='col-xs-6 col-xs-offset-3'>
-          <Panel header={title}>
-            <div className="statboxes clearfix">
-              {this.renderStats()}
-            </div>
-            <div className="row">
-              <div className="col-xs-4 text-center">
-                <p><span className="char-label">Level:</span> 1</p>
+        <div className='row'>
+          <div id="current" className='col-xs-6 col-xs-offset-3'>
+            <Panel header={title}>
+              <div className="statboxes clearfix">
+                {this.renderStats()}
               </div>
-              <div className="col-xs-4 text-center">
-                <p><span className="char-label">Current XP:</span> 0</p>
+              <div className="row">
+                <div className="col-xs-4 text-center">
+                  <p><span className="char-label">Level:</span> 1</p>
+                </div>
+                <div className="col-xs-4 text-center">
+                  <p><span className="char-label">Current XP:</span> 0</p>
+                </div>
+                <div className="col-xs-4 text-center">
+                  <p><span className="char-label">XP for Level 2:</span> 8</p>
+                </div>
               </div>
-              <div className="col-xs-4 text-center">
-                <p><span className="char-label">XP for Level 2:</span> 8</p>
+              <div className="row">
+                <div className="col-xs-4 text-center">
+                  <p><span className="char-label">HP:</span> {this.props.current.hp}</p>
+                </div>
+                <div className="col-xs-4 text-center">
+                  <p><span className="char-label">Dmg:</span> {this.props.current.dmg}</p>
+                </div>
               </div>
-            </div>
-            <div className="row">
-              <div className="col-xs-4 text-center">
-                <p><span className="char-label">HP:</span> {this.props.current.hp}</p>
-              </div>
-              <div className="col-xs-4 text-center">
-                <p><span className="char-label">Dmg:</span> {this.props.current.dmg}</p>
-              </div>
-            </div>
-          </Panel>
+            </Panel>
+          </div>
         </div>
       );
     }

@@ -18,6 +18,8 @@ let CharacterList = React.createClass({
       <div id="character-list" className="col-xs-12">
         <DropdownButton title={buttonTitle} bsSize='large'>
           {characterItems}
+          <MenuItem divider />
+          <MenuItemLink to="/new">New Character</MenuItemLink>
         </DropdownButton>
       </div>
     );

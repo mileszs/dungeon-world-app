@@ -7,25 +7,56 @@ import {NavItemLink} from 'react-router-bootstrap'
 
 import _ from 'lodash';
 
-import CharacterForm from './CharacterForm.react';
-import Dashboard from './Dashboard.react';
+import CharacterActions from '../actions/CharacterActions';
+import CharacterList from './CharacterList.react';
+
+import CharacterStore from '../stores/CharacterStore';
+
+function getState() {
+  let {characters, current} = CharacterStore.getState()
+  return {
+    characters: characters,
+    current: current,
+  };
+}
 
 let DWCharManagerApp = React.createClass({
+  getInitialState() {
+    CharacterActions.load()
+    return getState()
+  },
 
   render() {
     return (
       <div>
-        <Nav bsStyle='pills'>
-          <NavItemLink eventKey={1} to="/">Dashboard</NavItemLink>
-          <NavItemLink eventKey={2} to="/new">New Character</NavItemLink>
-        </Nav>
+        <div className="row">
+          <CharacterList characters={this.state.characters} currentChar={this.state.current} />
+        </div>
 
         <div className="details">
-          <RouteHandler {...this.props} />
+          <RouteHandler {...this.props} characters={this.state.characters} current={this.state.current} />
         </div>
       </div>
     );
   },
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.params && nextProps.params.id && ( this.state.current && nextProps.params.id != this.state.current.id)) {
+      CharacterActions.switchChar(nextProps.params.id)
+    }
+  },
+
+  componentDidMount() {
+    CharacterStore.listen(this._onChange);
+  },
+
+  componentWillUnmount() {
+    CharacterStore.unlisten(this._onChange);
+  },
+
+  _onChange() {
+    this.setState(getState());
+  }
 });
 
 export default DWCharManagerApp;
