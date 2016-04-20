@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "mileszs",
+    "password": null,
+    "database": "charsmithy_dev",
+    "host": "localhost",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "mileszs",
+    "password": null,
+    "database": "charsmithy_test",
+    "host": "localhost",
+    "dialect": "postgres"
+  },
+  "production": {
+    "username": "mileszs",
+    "password": null,
+    "database": "charsmithy_prod",
+    "host": "localhost",
+    "dialect": "postgres"
+  }
+}
